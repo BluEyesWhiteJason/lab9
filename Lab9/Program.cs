@@ -22,6 +22,7 @@ namespace Lab9
 			// Place into list
 			List<Student> students = new List<Student> { s1, s2, s3, s4, s5, s6, s7, s8 };
 
+           
 
 			// Get input on which student, catch exceptions
 			Console.WriteLine("Welcome to our C# class.");
@@ -31,38 +32,69 @@ namespace Lab9
                 Console.WriteLine("Would you like to learn about a student, or add a new one?");
 				Console.WriteLine("Enter 'new' or 'learn'");
                 string task = Console.ReadLine();
+                int num = 9;
                 if (task == "new")
                 {
                     //TODO reject bad input
-                    Console.WriteLine("What is the new students' name?");
-                    string name = Console.ReadLine();
-
-                    Console.WriteLine("Hometown?");
-                    string hometown = Console.ReadLine();
-
-                    Console.WriteLine("Favorite food?");
-                    string food = Console.ReadLine();
-
-                    string dancer = "";
-                    while (dancer != "dancer" && dancer != "human" && dancer != "Dancer" && dancer != "Dancer")
+                    string name = "";
+                    while (name == "")
                     {
-                        Console.WriteLine("Are they human? Or are they dancer?");
+                        Console.WriteLine("What is the new students' name?");
+                        name = Console.ReadLine();
+                    }
 
-                        dancer = Console.ReadLine();
+                    string hometown = "";
+                    while (hometown == "")
+                    {
+                        Console.WriteLine("Hometown?");
+                        hometown = Console.ReadLine();
                     }
                     
 
+                    string food = "";
+                    while (food == "")
+                    {
+                        Console.WriteLine("Favorite food?");
+                        food = Console.ReadLine();
+                    }
+                    
+
+                    string dancer = "";
+                    Console.WriteLine("Are they human? Or are they dancer?");
+
+                    while (dancer != "Human" && dancer != "human" && dancer != "dancer" && dancer != "Dancer")
+                    {
+                        Console.WriteLine("Please enter either 'Human' or 'Dancer'");
+                        dancer = Console.ReadLine();
+                    }
+
+                    students[num] = new Student(name, hometown, food, dancer);
                    
-
-                    Student s9 = new Student(name, hometown, food, dancer);
-
-                    students.Add(s9);
-
-                    Console.WriteLine("Alright, I have made it so.");
+                    Console.WriteLine($"Alright, I have added {name}.");
+                    num++;
 
                 }
                 else if (task == "learn")
                 {
+                    // Way to sort alphabetically that I am quite surprised works
+                    bool swap = true;
+                    while (swap)
+                    {
+                        swap = false;
+                        Student temp;
+                        for (int i = 0; i < students.Count - 1; i++)
+                        {
+                            
+                            if (students[i].Name[0] > students[i + 1].Name[0])
+                            {
+                                temp = students[i];
+                                students[i] = students[i + 1];
+                                students[i + 1] = temp;
+                                swap = true;
+                            }
+                        }
+                    }
+
                     Console.WriteLine("Which student would you like to learn more about ? (enter a number 1 - {0}):", students.Count);
                     for (int i = 0; i < students.Count; i++)
                     {
