@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 
 
 namespace Lab9
@@ -18,10 +20,13 @@ namespace Lab9
 			Student s7 = new Student("KymVe", "Grand Rapids", "Sushi", "Dancer");
 			Student s8 = new Student("Flaka", "Pristina", "Thai", "Human");
 
+            // Setup for toTitleCase()
+            TextInfo myTI = new CultureInfo("en-US", false).TextInfo;
 
 
-			// Place into list
-			List<Student> students = new List<Student> { s1, s2, s3, s4, s5, s6, s7, s8 };
+
+            // Place into list
+            List<Student> students = new List<Student> { s1, s2, s3, s4, s5, s6, s7, s8 };
 
            
 
@@ -34,32 +39,31 @@ namespace Lab9
                 Console.WriteLine("Would you like to learn about a student, or add a new one?");
 				Console.WriteLine("Enter 'new' or 'learn'");
                 string task = Console.ReadLine();
-                
+
                 if (task == "new")
                 {
-                    //TODO reject bad input
                     string name = "";
                     while (name == "")
                     {
                         Console.WriteLine("What is the new students' name?");
-                        name = Console.ReadLine();
+                        name = myTI.ToTitleCase(Console.ReadLine());    // From stackoverflow
                     }
 
                     string hometown = "";
                     while (hometown == "")
                     {
                         Console.WriteLine("Hometown?");
-                        hometown = Console.ReadLine();
+                        hometown = myTI.ToTitleCase(Console.ReadLine());
                     }
-                    
+
 
                     string food = "";
                     while (food == "")
                     {
                         Console.WriteLine("Favorite food?");
-                        food = Console.ReadLine();
+                        food = myTI.ToTitleCase(Console.ReadLine());
                     }
-                    
+
 
                     string dancer = "";
                     Console.WriteLine("Are they human? Or are they dancer?");
@@ -67,12 +71,12 @@ namespace Lab9
                     while (dancer != "Human" && dancer != "human" && dancer != "dancer" && dancer != "Dancer")
                     {
                         Console.WriteLine("Please enter either 'Human' or 'Dancer'");
-                        dancer = Console.ReadLine();
+                        dancer = myTI.ToTitleCase(Console.ReadLine());
                     }
 
 
-                    students.Add(new Student(name, hometown, food, dancer)); 
-                   
+                    students.Add(new Student(name, hometown, food, dancer));
+
                     Console.WriteLine($"Alright, I have added {name}.");
                     num++;
 
@@ -87,16 +91,26 @@ namespace Lab9
                         Student temp;
                         for (int i = 0; i < students.Count - 1; i++)
                         {
-                            
-                            if (students[i].Name[0] > students[i + 1].Name[0])
+                            for (int j = 0; i < 3; j++)
                             {
-                                temp = students[i];
-                                students[i] = students[i + 1];
-                                students[i + 1] = temp;
-                                swap = true;
+                                if (students[i].Name[j] > students[i + 1].Name[j])
+                                {
+                                    temp = students[i];
+                                    students[i] = students[i + 1];
+                                    students[i + 1] = temp;
+                                    swap = true;
+                                }
+                                else if (students[i].Name[j] < students[i + 1].Name[j])
+                                {
+                                    break;
+                                }
                             }
+
                         }
                     }
+
+                        // Much easier way shown in class
+                       // students = students.OrderBy(x => x.Name).ToList();
 
                     Console.WriteLine("Which student would you like to learn more about ? (enter a number 1 - {0}):", students.Count);
                     for (int i = 0; i < students.Count; i++)
@@ -163,7 +177,7 @@ namespace Lab9
 
 		public static bool Proceed()
 		{
-			Console.WriteLine("Want to try again? y/n : ");
+			Console.WriteLine("Continue? y/n : ");
 			string contEnter = Console.ReadLine();
 
 			// Check if they want to continue
@@ -173,6 +187,7 @@ namespace Lab9
 			}
 			else if (contEnter == "n" || contEnter == "N")
 			{
+                Console.WriteLine("Goodbye!");
 				return false;
 			}
 
