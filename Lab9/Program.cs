@@ -19,8 +19,9 @@ namespace Lab9
 			Student s8 = new Student("Flaka", "Pristina", "Thai", "Human");
 
 
+
 			// Place into list
-			List<Student> students = new List<Student> { s1, s2, s3, s4, s5, s6, s7, s8 };
+			List<Student> students = new List<Student> { s1, s2, s3, s4, s5, s6, s7, s8,  };
 
            
 
@@ -32,7 +33,7 @@ namespace Lab9
                 Console.WriteLine("Would you like to learn about a student, or add a new one?");
 				Console.WriteLine("Enter 'new' or 'learn'");
                 string task = Console.ReadLine();
-                int num = 9;
+                int num = 8;
                 if (task == "new")
                 {
                     //TODO reject bad input
@@ -67,6 +68,9 @@ namespace Lab9
                         Console.WriteLine("Please enter either 'Human' or 'Dancer'");
                         dancer = Console.ReadLine();
                     }
+
+
+                    students.Add(s1);
 
                     students[num] = new Student(name, hometown, food, dancer);
                    
@@ -160,7 +164,7 @@ namespace Lab9
 
 		public static bool Proceed()
 		{
-			Console.WriteLine("Learn about a different student? y/n : ");
+			Console.WriteLine("Want to try again? y/n : ");
 			string contEnter = Console.ReadLine();
 
 			// Check if they want to continue
