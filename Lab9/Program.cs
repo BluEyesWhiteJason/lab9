@@ -21,19 +21,20 @@ namespace Lab9
 
 
 			// Place into list
-			List<Student> students = new List<Student> { s1, s2, s3, s4, s5, s6, s7, s8,  };
+			List<Student> students = new List<Student> { s1, s2, s3, s4, s5, s6, s7, s8 };
 
            
 
 			// Get input on which student, catch exceptions
 			Console.WriteLine("Welcome to our C# class.");
+            int num = 8;
 
-			do
+            do
 			{
                 Console.WriteLine("Would you like to learn about a student, or add a new one?");
 				Console.WriteLine("Enter 'new' or 'learn'");
                 string task = Console.ReadLine();
-                int num = 8;
+                
                 if (task == "new")
                 {
                     //TODO reject bad input
@@ -70,9 +71,7 @@ namespace Lab9
                     }
 
 
-                    students.Add(s1);
-
-                    students[num] = new Student(name, hometown, food, dancer);
+                    students.Add(new Student(name, hometown, food, dancer)); 
                    
                     Console.WriteLine($"Alright, I have added {name}.");
                     num++;
@@ -176,11 +175,18 @@ namespace Lab9
 			{
 				return false;
 			}
+
 			else
 			{
 				Console.WriteLine("Invalid input, please enter y or n");
-				Proceed();
-				return false;
+                if (Proceed())      //It's not really caring about this
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
 			}
 		}
 	}
